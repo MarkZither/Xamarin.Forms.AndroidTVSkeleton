@@ -10,8 +10,8 @@ namespace Xamarin.Forms.AndroidTVSkeleton
 	public partial class App : Application
 	{
 		//TODO: Replace with *.azurewebsites.net url after deploying backend to Azure
-        public static string AzureBackendUrl = "http://localhost:5000";
-        public static bool UseMockDataStore = true;
+        public static string AzureBackendUrl = "http://xamarinformsandroidtvskeletonmobileappservice20180719045458.azurewebsites.net";
+        public static bool UseMockDataStore = false;
 		
 		public App ()
 		{
