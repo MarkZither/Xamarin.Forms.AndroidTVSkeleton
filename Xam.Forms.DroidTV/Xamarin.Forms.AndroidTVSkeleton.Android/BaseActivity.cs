@@ -31,14 +31,13 @@ namespace Xamarin.Forms.AndroidTVSkeleton.Droid
         protected override void OnCreate(Bundle bundle)
         {
             base.OnCreate(bundle);
-            SetContentView(LayoutResource);
+            //SetContentView(LayoutResource);
             Toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
             if (Toolbar != null)
             {
                 SetSupportActionBar(Toolbar);
                 SupportActionBar.SetDisplayHomeAsUpEnabled(true);
                 SupportActionBar.SetHomeButtonEnabled(true);
-
             }
         }
 
