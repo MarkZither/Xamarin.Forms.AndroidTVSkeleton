@@ -92,6 +92,59 @@ namespace Xamarin.Forms.AndroidTVSkeleton.Droid
                     break;
             }
         }
+        CameraChoiceRequest request;
+        Button buttonRear, buttonFront;
+        protected override void OnResume()
+        {
+            base.OnResume();
+            if (!IsVoiceInteraction)
+            {
+                return;
+            }
+
+            //Send our our first request asking for front or rear facing camera to use.
+            var front = new VoiceInteractor.PickOptionRequest.Option("Front Camera", 0);
+            front.AddSynonym("Front");
+            front.AddSynonym("Selfie");
+            front.AddSynonym("Forward");
+
+            var rear = new VoiceInteractor.PickOptionRequest.Option("Rear Camera", 1);
+            rear.AddSynonym("Rear");
+            rear.AddSynonym("Back");
+            rear.AddSynonym("Normal");
+
+            var prompt = new VoiceInteractor.Prompt("Which camera would you like to use?");
+            request = new CameraChoiceRequest(prompt, new[] { front, rear }, new[] { buttonFront, buttonRear });
+
+            VoiceInteractor.SubmitRequest(request);
+        }
+
+        protected class CameraChoiceRequest : VoiceInteractor.PickOptionRequest
+        {
+            View[] views;
+            public CameraChoiceRequest(VoiceInteractor.Prompt prompt, Option[] choices, View[] views)
+                : base(prompt, choices, null)
+            {
+                this.views = views;
+            }
+
+            public override void OnPickOptionResult(bool finished, Option[] selections, Bundle result)
+            {
+                base.OnPickOptionResult(finished, selections, result);
+
+                /*if (!finished || selections.Length != 1)
+                    return;
+
+                Log.Debug("VoiceCamera", "Selected: " + selections[0].Label + " Index: " + selections[0].Index);
+
+                var fragment = CameraFragment.NewInstance();
+                Activity.Intent.PutExtra("android.intent.extra.USE_FRONT_CAMERA", selections[0].Index == 0);
+                fragment.Arguments = Activity.Intent.Extras;
+                Activity.FragmentManager.BeginTransaction().Replace(Resource.Id.container, fragment).Commit();
+                foreach (var view in views)
+                    view.Visibility = ViewStates.Gone;*/
+            }
+        }
     }
 }
 
